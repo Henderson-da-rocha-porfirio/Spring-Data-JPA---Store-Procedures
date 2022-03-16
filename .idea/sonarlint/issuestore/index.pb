@@ -5,8 +5,6 @@ U
 mvnw,5\d\5d837c4ed85ecaaf932c506e80ff5d7b9f3d590d
 8
 mvnw.cmd,1\f\1f1763f358c257ea3515417352b82b0165647ad1
-Å
-Qsrc/test/java/com/tuyo/produtodata/produtosdata/ProdutosdataApplicationTests.java,6\e\6e220a168160a62ee06cfcc0f38dc7eb2fe079c7
 Ö
 U.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_logging_2_6_4.xml,9\5\953c6d8ed37a296b4aaacc289eadba1ba2f22d02
 w
@@ -151,9 +149,5 @@ y
 I.idea/libraries/Maven__org_junit_platform_junit_platform_engine_1_8_2.xml,6\1\61fd4918157c43bb5dbdf05064045724fbe374c2
 |
 L.idea/libraries/Maven__jakarta_persistence_jakarta_persistence_api_2_2_3.xml,5\d\5dde8a7115c6c13d07bad504fc1a996ba1fcbe18
-@
-produtosdata.iml,9\2\921598a044fae7caf9640b29d74b668b19a50dec
 7
 HELP.md,1\a\1a273f73b7a477b0745593641bd708a6182c7ad5
-7
-pom.xml,4\4\442292b8a7efeabbe4cc176709b833b1792140ec
