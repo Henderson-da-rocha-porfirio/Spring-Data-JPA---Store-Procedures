@@ -20,7 +20,7 @@ class ProdutosdataApplicationTests { 	// Junit testes
 	}
 
 	@Test
-	void testCreate() {
+	void testCreate() { 				// Método que insere dados no banco através do teste.
 		Produto produto = new Produto();
 		produto.setId(1);
 		produto.setName("Iphone");
