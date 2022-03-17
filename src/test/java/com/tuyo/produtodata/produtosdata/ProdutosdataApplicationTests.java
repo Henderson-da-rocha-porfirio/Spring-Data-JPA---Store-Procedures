@@ -8,6 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 @RunWith(SpringRunner.class) 			//Usando SpringRunner em vez de JUnit default.
 @SpringBootTest
 class ProdutosdataApplicationTests { 	// Junit testes
@@ -28,6 +31,14 @@ class ProdutosdataApplicationTests { 	// Junit testes
 		produto.setPrice(1000d);
 
 		repository.save(produto);
+	}
+
+	@Test
+	public void testRead() {
+		Produto produto = repository.findById(1).get();
+		assertNotNull(produto);
+		assertEquals("Iphone", produto.getName());
+		System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + produto.getDesc());
 	}
 
 }
