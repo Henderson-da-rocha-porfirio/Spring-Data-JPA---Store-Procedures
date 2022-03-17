@@ -151,3 +151,14 @@ I.idea/libraries/Maven__org_junit_platform_junit_platform_engine_1_8_2.xml,6\1\
 L.idea/libraries/Maven__jakarta_persistence_jakarta_persistence_api_2_2_3.xml,5\d\5dde8a7115c6c13d07bad504fc1a996ba1fcbe18
 7
 HELP.md,1\a\1a273f73b7a477b0745593641bd708a6182c7ad5
+:
+
+.gitignore,a\5\a5cc2925ca8258af241be7e5b0381edf30266302
+i
+9.idea/libraries/Maven__org_hamcrest_hamcrest_core_2_2.xml,c\9\c949a3e6f43b66dd4394853553a04f8c41e6e4e3
+]
+-.idea/libraries/Maven__junit_junit_4_13_2.xml,5\4\54f4510b91c2683595ce2e8f36b90b301f51d8d3
+@
+produtosdata.iml,9\2\921598a044fae7caf9640b29d74b668b19a50dec
+7
+pom.xml,4\4\442292b8a7efeabbe4cc176709b833b1792140ec
