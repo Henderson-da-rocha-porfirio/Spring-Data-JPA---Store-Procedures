@@ -41,4 +41,28 @@ class ProdutosdataApplicationTests { 	// Junit testes
 		System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + produto.getDesc());
 	}
 
+	@Test
+	public void testUpdate() {
+		Produto produto = repository.findById(1).get();
+		produto.setPrice(1200d);
+		repository.save(produto); // usar o mesmo método usado em testCreate
+
+	}
+
+	@Test
+	public void testDelete() {
+		repository.deleteById(1);
+		}
+
+
+	/*@Test
+	public void testDelete() {
+		if (repository.existsById(1)) {
+			System.out.println("Deletando um produto");
+			repository.deleteById(1);
+		}*/
+
+
+
+
 }
