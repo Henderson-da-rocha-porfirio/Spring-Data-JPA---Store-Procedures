@@ -11,44 +11,43 @@ import org.springframework.test.context.junit4.SpringRunner;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-@RunWith(SpringRunner.class) 			//Usando SpringRunner em vez de JUnit default.
+@RunWith(SpringRunner.class)            //Usando SpringRunner em vez de JUnit default.
 @SpringBootTest
 class ProdutosdataApplicationTests {    // Junit testes
 
-	@Autowired
-	ProdutoRepository repository;
+    @Autowired
+    ProdutoRepository repository;
 
-	@Test
-		// Construtor marcado com a annotation Test.
-	void contextLoads() {                // Esse teste ele vai correr e procurar por uma classe que tiver marcada, no classpath, com a @SprinBootApplication.
-	}
+    @Test
+        // Construtor marcado com a annotation Test.
+    void contextLoads() {                // Esse teste ele vai correr e procurar por uma classe que tiver marcada, no classpath, com a @SprinBootApplication.
+    }
 
-	@Test
-	void testCreate() {                // Método que insere dados no banco através do teste.
-		Produto produto = new Produto();
-		produto.setId(1);
-		produto.setName("Iphone");
-		produto.setDesc("Awesome");
-		produto.setPrice(1000d);
+    @Test
+    void testCreate() {                // Método que insere dados no banco através do teste.
+        Produto produto = new Produto();
+        produto.setId(1);
+        produto.setName("Iphone");
+        produto.setDesc("Awesome");
+        produto.setPrice(1000d);
 
-		repository.save(produto);
-	}
+        repository.save(produto);
+    }
 
-	@Test
-	public void testRead() {
-		Produto produto = repository.findById(1).get();
-		assertNotNull(produto);
-		assertEquals("Iphone", produto.getName());
-		System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + produto.getDesc());
-	}
+    @Test
+    public void testRead() {
+        Produto produto = repository.findById(1).get();
+        assertNotNull(produto);
+        assertEquals("Iphone", produto.getName());
+        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + produto.getDesc());
+    }
 
-	@Test
-	public void testUpdate() {
-		Produto produto = repository.findById(1).get();
-		produto.setPrice(1200d);
-		repository.save(produto); // usar o mesmo método usado em testCreate
-
-	}
+    @Test
+    public void testUpdate() {
+        Produto produto = repository.findById(1).get();
+        produto.setPrice(1200d);
+        repository.save(produto); // usar o mesmo método usado em testCreate
+    }
 
 	/*@Test
 	public void testDelete() {
@@ -56,13 +55,16 @@ class ProdutosdataApplicationTests {    // Junit testes
 		}*/
 
 
-	@Test
-	public void testDelete() {
-		if (repository.existsById(1)) {
-			System.out.println("Deletando um produto");
-			repository.deleteById(1);
-		}
+    @Test
+    public void testDelete() {
+        if (repository.existsById(1)) {
+            System.out.println("Deletando um produto");
+            repository.deleteById(1);
+        }
+    }
 
-
-	}
+    @Test
+    public void testCount() {
+        System.out.println("Total de Gravações===============>>>>>>>>>>>>>>>" + repository.count());
+    }
 }

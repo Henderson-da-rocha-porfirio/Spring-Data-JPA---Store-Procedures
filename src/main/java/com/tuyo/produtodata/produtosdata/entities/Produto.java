@@ -10,7 +10,7 @@ import javax.persistence.Table;
 public class Produto {
     private static final long serialVersionUID = 1L;
 
-    @Id // anotação necessária.
+    @Id // this is mandatory = anotação necessária.
     private int id;                      // primary key
     private String name;
     @Column(name = "description")       // Só é necessária se o nome da coluna for diferente. Nesse caso é. POrque está como description.
