@@ -11,4 +11,7 @@ public interface ProdutoRepository extends CrudRepository<Produto, Integer> {   
                                                                                         // 1. nesse caso, ele pega uma string name de Produto e retorna uma lista de produto e executa a ação internamente onde uma query será executada.
                                                                                         // 2. O name será substituído no lugar do nome do produto e retorna resultados que são automaticamente convertidos numa
                                                                                         // lista de produtos em que cada linha do database é convertida num objeto produto e esse objeto é colocado numa lista.
+    List<Produto> findByNameAndDesc(String name,String desc);
+
+    List<Produto> findByPriceGreaterThan(Double price);
 }

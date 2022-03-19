@@ -79,4 +79,22 @@ class ProdutosdataApplicationTests {    // Junit testes
         List<Produto> produtos1 = repository.findByName("Smartphone");
         produtos1.forEach(p -> System.out.println(p.getPrice()));
     }
+
+    @Test
+    public void testFindByNameAndDesc() {
+        List<Produto> produtos = repository.findByNameAndDesc("Iphone", "Apple");
+        produtos.forEach(p -> System.out.println(p.getPrice()));                        // Exemplo com uso de outra palavra-teste
+    }
+
+ /*   @Test
+    public void testFindByPriceGreaterThan() { // Verifica por nome.
+        List<Produto> produtos = repository.findByPriceGreaterThan(1000d);
+        produtos.forEach(p -> System.out.println(p.getName()));
+    }*/
+
+    @Test
+    public void testFindByPriceGreaterThan() { // Verificar por preço
+        List<Produto> produtos = repository.findByPriceGreaterThan(1000d);
+        produtos.forEach(p -> System.out.println(p.getPrice()));
+    }
 }
