@@ -1,17 +1,17 @@
 package com.tuyo.produtodata.produtosdata;
 
-import com.tuyo.produtodata.produtosdata.entities.Produto;
-import com.tuyo.produtodata.produtosdata.repository.ProdutoRepository;
-import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+import com.tuyo.produtodata.produtosdata.entities.*;
+import com.tuyo.produtodata.produtosdata.repository.*;
+import org.junit.jupiter.api.*;
+import org.junit.runner.*;
+import org.springframework.beans.factory.annotation.*;
+import org.springframework.boot.test.context.*;
+import org.springframework.data.domain.*;
+import org.springframework.test.context.junit4.*;
 
-import java.util.List;
+import java.util.*;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 @RunWith(SpringRunner.class)            //Usando SpringRunner em vez de JUnit default.
 @SpringBootTest
@@ -97,4 +97,68 @@ class ProdutosdataApplicationTests {    // Junit testes
         List<Produto> produtos = repository.findByPriceGreaterThan(1000d);
         produtos.forEach(p -> System.out.println(p.getPrice()));
     }
+
+    @Test
+    public void testFindByDescContains() { // desc = description = descricao e não decrescente.
+        List<Produto> produtos = repository.findByDescContains("Apple");
+        produtos.forEach(p -> System.out.println(p.getName()));
+    }
+
+    @Test
+    public void testFindByPriceBetween() {
+        List<Produto> produtos = repository.findByPriceBetween(500d, 2500d);
+        produtos.forEach(p -> System.out.println(p.getName()));
+    }
+
+    @Test
+    public void testFindByDescLike() {
+        List<Produto> produtos = repository.findByDescLike("%Garmin%");
+        produtos.forEach(p -> System.out.println(p.getName()));
+    }
+
+    @Test
+    public void testFindByIdsIn() {
+        // Pageable pageable = new PageRequest(0, 2);
+        Pageable pageable = PageRequest.of(0, 2);
+        List<Produto> produtos = repository.findByIdIn(Arrays.asList(1, 2, 3), pageable);
+        produtos.forEach(p -> System.out.println(p.getName()));
+    }
+
+    @Test
+    public void testFindAllPaging() {
+        Pageable pageable = PageRequest.of(0, 2);
+        Iterable<Produto> results = repository.findAll(pageable);
+        results.forEach(p -> System.out.println(p.getName()));
+
+    }
+
+    @Test
+    public void testFindAllSorting() {
+        repository.findAll(Sort.by(new Sort.Order(Sort.Direction.DESC, "name"), new Sort.Order(null, "price")))
+                .forEach(p -> System.out.println(p.getName()));
+
+        // repository.findAll(Sort.by("name", "price")).forEach(p ->
+        // System.out.println(p.getName()));
+
+    }
+
+    @Test
+    public void testFindAllPagingAndSorting() {
+        Pageable pageable = PageRequest.of(0, 2, Sort.Direction.DESC, "name");
+        repository.findAll(pageable).forEach(p -> System.out.println(p.getName()));
+
+    }
+
+/*    @Test
+    @Transactional
+    public void testCaching() {
+        Session session = entityManager.unwrap(Session.class);
+        Produto produto = repository.findById(1).get();
+
+        repository.findById(1).get();
+
+        session.evict(produto);
+
+        repository.findById(1).get();
+    }*/
 }
