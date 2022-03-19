@@ -125,7 +125,8 @@ class ProdutosdataApplicationTests {    // Junit testes
     }
 
     @Test
-    public void testFindAllPaging() {                               // FindAll methods só apareceram apra serem utilizado depois de ser implementado em ProdutoRepository: PagingAndSortingRepository
+    public void testFindAllPaging() {                               // Criando Paging
+                                                                    // FindAll methods só apareceram apra serem utilizado depois de ser implementado em ProdutoRepository: PagingAndSortingRepository
         Pageable pageable = PageRequest.of(0, 1);         // Usando Pageable de Spring Data e não do java.awt. Pageable é uma Interface e por isso não é possível criar uma instância (instanceOf)
         Iterable<Produto> results = repository.findAll(pageable);   // Tem que criar uma PageRequest: Um Objeto PageRequest é uma implementação do pageable do heat control.
         results.forEach(p -> System.out.println(p.getName()));      // Vamos utilizar o PageRequest com dois parâmetros: page e size.
@@ -144,17 +145,23 @@ class ProdutosdataApplicationTests {    // Junit testes
     }
 
     @Test
-    public void testFindAllSorting() {
-        repository.findAll(Sort.by(new Sort.Order(Sort.Direction.DESC, "name"), new Sort.Order(null, "price")))
+    public void testFindAllSorting() {      // Criando Sorting
+                                            // Quando se utiliza o Sorting, temos que pensar em qual tipo queremos utilizar:
+                                            // 1. properties: colunas no database. Deve se usar apenas quando quiser que o construtor pegue um número de propriedades da nossa entidade.
+                                            // ficaria algo do tipo passando a propriedade "name" que está na entidade Produto: new Sort("name").
+                                            //E caso não especifique a ordem da listagem, ela aparecerá como ascendente.
+                                            // 2. orders: direção
+        repository.findAll(Sort.by(new Sort.Order(Sort.Direction.DESC, "name"), new Sort.Order(null, "price"))) // Order: é uma Innerclasse de Sort Class (escolher Order() Anonymous Inner Type.
+                                                                                                                                        // Sort está "sorteando" por nome de forma decrescente.
                 .forEach(p -> System.out.println(p.getName()));
 
-        // repository.findAll(Sort.by("name", "price")).forEach(p ->
-        // System.out.println(p.getName()));
-
+        // repository.findAll(Sort.by("name", "price")).forEach(p -> System.out.println(p.getName()));                  // Ao utilizarmos aqui o .forEach estamos eliminando esse pedaço de código: Iterable<Produto>findAll = ... porque ele elimina o Iterable.
+                                                                                                                        // Ele sorteia em ordem alfabética.
+        // repository.findAll(new Sort(Direction.DESC, "name", "price")).forEach(p -> System.out.println(p.getName())); // Em ordem decrescente.
     }
 
     @Test
-    public void testFindAllPagingAndSorting() {
+    public void testFindAllPagingAndSorting() {                                                         //Paging e Sorting sendo usados juntos
         Pageable pageable = PageRequest.of(0, 2, Sort.Direction.DESC, "name");
         repository.findAll(pageable).forEach(p -> System.out.println(p.getName()));
 
