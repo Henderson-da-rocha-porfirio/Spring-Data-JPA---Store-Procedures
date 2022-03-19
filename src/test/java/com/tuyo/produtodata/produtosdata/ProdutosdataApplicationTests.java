@@ -125,11 +125,22 @@ class ProdutosdataApplicationTests {    // Junit testes
     }
 
     @Test
-    public void testFindAllPaging() {
-        Pageable pageable = PageRequest.of(0, 2);
-        Iterable<Produto> results = repository.findAll(pageable);
-        results.forEach(p -> System.out.println(p.getName()));
-
+    public void testFindAllPaging() {                               // FindAll methods só apareceram apra serem utilizado depois de ser implementado em ProdutoRepository: PagingAndSortingRepository
+        Pageable pageable = PageRequest.of(0, 1);         // Usando Pageable de Spring Data e não do java.awt. Pageable é uma Interface e por isso não é possível criar uma instância (instanceOf)
+        Iterable<Produto> results = repository.findAll(pageable);   // Tem que criar uma PageRequest: Um Objeto PageRequest é uma implementação do pageable do heat control.
+        results.forEach(p -> System.out.println(p.getName()));      // Vamos utilizar o PageRequest com dois parâmetros: page e size.
+                                                                    // page: é a página que eu quero acessar. Por exemplo, nós temos 5 gravações no database:
+                                                                    // E podemos recuperar somente uma gravação por página. E nesse caso, só podemos acessar as páginas 0 ou 1 ou 2 ou 3.
+                                                                    // size: é o tamanho de quantas gravações queremos por página.
+                                                                    // page index: começa com 0 e não com 1. Então, "0", é a primeira página que queremos acesar.
+                                                                    // size: vamos começar com "1", indicando que apenas uma gravação apareça por página se eu acessar a página "0"(primeira página).
+                                                                    // Iterable<Produto> ... = estamos assinando um estado comportamental, sequencial, para uma nova local variável com a Interface Iterable.
+                                                                    // Isso retorna uma página exclusiva de produtos onde poderemos interar ( listar em sequência ).
+                                                                    // forEach: para usar uma expressão lambda (economia de código numa listagem).
+                                                                    // forEach: eu pego os resultados passados em cada forEach e os uso na expressao lambda para cada produto.
+                                                                    // Em Iterable, que funciona igual a uma lista ( para isso ocorrer, eu usei a expressão Lambda que mostra o nome da página.
+                                                                    // Acessar Page: só mudar em page a que deseja mostrar: 0, 1, 2, 3 ou 4. (equivalente a 5 páginas)
+                                                                    // Size: Quantidade de páginas: como temos apenas 5 páginas, podemos colocar no máximo 2 em size. Se tivéssemos 6, aí conseguiríamos e assim por diante.
     }
 
     @Test
