@@ -3,6 +3,12 @@ package com.tuyo.produtodata.produtosdata.repository;
 import com.tuyo.produtodata.produtosdata.entities.Produto;
 import org.springframework.data.repository.CrudRepository;
 
+import java.util.List;
+
 public interface ProdutoRepository extends CrudRepository<Produto, Integer> {           // É preciso prover genérica informação que este repositório CRUD espera.
-                                                                                // <T, Id> = Tipo: Entidade Produto. E Id: Integer. Lá está como tipo primitivo "int", colocamos aqui com a classe " Integer ".
+                                                                                         // <T, Id> = Tipo: Entidade Produto. E Id: Integer. Lá está como tipo primitivo "int", colocamos aqui com a classe " Integer ".
+    List<Produto> findByName(String name);                                              // Fazendo uso de métodos Finder
+                                                                                        // 1. nesse caso, ele pega uma string name de Produto e retorna uma lista de produto e executa a ação internamente onde uma query será executada.
+                                                                                        // 2. O name será substituído no lugar do nome do produto e retorna resultados que são automaticamente convertidos numa
+                                                                                        // lista de produtos em que cada linha do database é convertida num objeto produto e esse objeto é colocado numa lista.
 }

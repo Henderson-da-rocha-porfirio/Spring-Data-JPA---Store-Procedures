@@ -162,3 +162,7 @@ i
 produtosdata.iml,9\2\921598a044fae7caf9640b29d74b668b19a50dec
 7
 pom.xml,4\4\442292b8a7efeabbe4cc176709b833b1792140ec
+9
+	README.md,8\e\8ec9a00bfd09b3190ac6b22251dbb1aa95a0579d
+|
+Lsrc/main/java/com/tuyo/produtodata/produtosdata/ProdutosdataApplication.java,8\6\86505ea162519a2e5eecc4f55be93d429c887446

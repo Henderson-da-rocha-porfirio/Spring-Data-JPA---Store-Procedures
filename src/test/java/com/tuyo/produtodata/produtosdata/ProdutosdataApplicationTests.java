@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -66,5 +68,15 @@ class ProdutosdataApplicationTests {    // Junit testes
     @Test
     public void testCount() {
         System.out.println("Total de Gravações===============>>>>>>>>>>>>>>>" + repository.count());
+    }
+
+    @Test
+    public void testFindByName() { // permite testar para vermos os precos dos smartphones cadastrados através do console. Ou seja, achar métodos sem escrever nenhum código sql.
+        List<Produto> produtos = repository.findByName("Smartphone");
+        produtos.forEach(p -> System.out.println(p.getPrice()));            // realizando iteração (listagem) do produto usando java 8 syntazx
+                                                                            // usando expressao lambda -> arrow. O "p" representa cada produto na lista de produto.
+                                                                            // p.getPrice = imprimir o preço do produto.
+        List<Produto> produtos1 = repository.findByName("Smartphone");
+        produtos1.forEach(p -> System.out.println(p.getPrice()));
     }
 }
