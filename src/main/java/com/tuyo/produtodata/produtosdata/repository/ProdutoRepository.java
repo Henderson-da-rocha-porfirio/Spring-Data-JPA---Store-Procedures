@@ -22,5 +22,7 @@ public interface ProdutoRepository extends PagingAndSortingRepository<Produto, I
 
     List<Produto> findByDescLike(String desc);
 
-    List<Produto> findByIdIn(List<Integer> ids, Pageable pageable);
+   // List<Produto> findByIdIn(List<Integer> ids);
+
+    List<Produto> findByIdIn(List<Integer> ids, Pageable pageable); // trabalhando com PagingAndSorting o método acima
 }
