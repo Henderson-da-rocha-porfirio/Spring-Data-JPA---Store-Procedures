@@ -1,5 +1,5 @@
-# FullStack Spring and React
-###Entendendo o Fluxo de Execução do Spring ao corrermos ( run ) a nossa aplicação:
+# SPRING DATA JPA
+## A. Entendendo o Fluxo de Execução do Spring ao corrermos ( run ) a nossa aplicação:
 #### 1. MAVEN CLASSPATH: Ele começa buscando em nossa classpath as dependências do Maven que foram inicializadas na instalação do projeto como o Spring:
 ##### a. Se não usarmos outro fornecedor(vendor) ORM ( Object Relational Mapping = processo de mapeamento de uma classe java à tabela do database e seus campos ou membros para as colunas das tabelas existentes. ), ele usará o hibernate por default.
 ##### b. Busca também pelo connector sql ( ou mysql se estiver usando ).
@@ -13,4 +13,32 @@
 ##### c. E quando executa nossa Interface ProdutoRepositorio com o método respository.save, Spring cria internamente uma implementação, uma implementação representante ( proxy ) dessa classe que retornará os métodos invocados em EntityManager.
 ##### d. Então, quando invocamos métodos como "save" ou um "find one" ou um "delete", internamente, Spring está invocando os métodos de EntityManager através de uma classe que gera em tempo real a implementação nessa interface em particular e executa as operações de gerenciamento necessárias no Database.
 ##### e. Com isso, evitamos todos os códigos boiler plates ( vários códigos e estruturas ) e configuração ao simplesmente usar Spring Data que simplifica nossas operações de Database para as nossas aplicações.
+## B. JPQL
+##### a. Significa Java Persistence Query Language.
+##### b. Ele é um padrão para fazer queries do JPA que nada tem a ver com objetos e classe de domínios que são escritos em queries sequenciais, diferentes de como são escritas para tabelas e colunas do database.
+##### c. JPQL queries são escritas de maneira diferente de nossos objetos e seus campos.
+##### d. Exemplo:
+##### 1. Database functab: 
+|   funcid   |  pname  |    uname    |
+| :---         |     :---:      |          ---: |
+|   |      |    |
+|      |       |      |
 
+
+##### 2. Entidade Funcionario (definida com JPA) com os três campos que mapeiam as três colunas de functab:
+|   Funcionario     | 
+| :---         |
+| int id;   |
+| String pName  (P = primeiro nome)   |
+| String uName  (U = ultimo nome)   |
+| select * from Funcionario (SQL)|
+| select pName,uName from Funcionario(JPQL)   |
+
+##### e. No exemplo acima, as instruções JPQL estão convertendo os domínios das classes e seus campos, que são internamente convertidos pelo nosso ORM igual ao Hibernate no SQL.
+##### f. Ele é convertido apropriadamente para o SQL correspondente ao mapeamento da entidade (Funcionario) e o da tabela(functab) do database.
+##### g. É possível chamar os parâmetros passados dentro dessas queries.
+##### h. Também pode-se utilizar select e nao-select operações como: inster, update, deletes usando JPQL.
+##### i. Fazer uso de funções de agregação relacionais e Joins.
+##### j. Muito do que há em SQL pode ser convertido e usado em palavras-chaves e síntaxe JPQL.
+##### k. JPQL é case sensitive quando quando se trata de nomes de classe de domínio (Funcionario) e seu campos (pName e etc).
+##### l. Contudo, JPQL não é case sensitive quando se trata de palavras-chave na própria sintaxe da linguagem como, por exemplo, se você estivesse usando funções agregadas como contagem.
