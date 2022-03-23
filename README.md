@@ -1,4 +1,4 @@
-# SPRING DATA JPA
+# SPRING DATA JPA 
 ## A. Entendendo o Fluxo de Execução do Spring ao corrermos ( run ) a nossa aplicação:
 #### 1. MAVEN CLASSPATH: Ele começa buscando em nossa classpath as dependências do Maven que foram inicializadas na instalação do projeto como o Spring:
 ##### a. Se não usarmos outro fornecedor(vendor) ORM ( Object Relational Mapping = processo de mapeamento de uma classe java à tabela do database e seus campos ou membros para as colunas das tabelas existentes. ), ele usará o hibernate por default.
