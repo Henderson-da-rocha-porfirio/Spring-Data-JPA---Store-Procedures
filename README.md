@@ -1,47 +1,44 @@
-# CACHING TEST NÍVEL 1 - SESSION
-# Caching ou Cache
-## A. O que é caching?
-## Precisamos entender antes de responder a pergunta:
-### 1. Conceito de Cache em Computação: é um dispositivo de acesso rápido, interno a um sistema, que serve de intermediário entre um operador de um processo e o dispositivo de armazenamento ao qual esse operador acede (wikipedia)
-### 2. Entender como o ORM ( Object Relational Mapping = processo de mapeamento de uma classe java à tabela do database e seus campos ou membros para as colunas das tabelas existentes) lê os dados. Veja este exemplo:
-#### a. Client: ele acessa a aplicação
-#### b. Aplicacao: e essa usa as ferramentas do ORM igual ao Hibernate para ler os dados. 
-#### c. ORM: executa um "select query" internamente executa uma consulta de seleção no banco de dados e obtém os dados. E converte os dados em objetos e os entrega a applicação. E os envia de volta ao Client como solicitado. Isso pode ser em HTML ou poderia ser em algum tipo de outra representação.
-### 3. Em todo o tempo o Client ler algum dado da Aplicacao e a Aplicacao ou o ORM executarão um "Select" ou uma grande quantidade de "Selects" a uma Tabela que usam Joins a Joins à múltiplas Tabelas.
-### 4. Caching/Cache: É o processo de realizar as mesmas operações de leitura no database inúmeras vezes sem precisar de repetição de instruções SQL.
-### 5. O Caching armazena dados ou objetos em um local temporário.
-### 6. Isso é o Processo de Caching: Quando uma ( ou muitas) requisição ( request ) é feita pela primeira vez, ela vem ao ORM (hibernate) ou as frameworks (estruturas) do cache lerão os dados, convertendo-o em objeto e o guardando numa memória temporária ou até mesmo num disco.
-### 7. A próxima requisição (request) vão às Frameworks ORM ou as Frameworks Caching, onde essas, se assim ocorrer, checarão primeiro se esse dado é para uma particular requisição existente no Cache. Se ele estiver nesse, não haverá consultas de seleção de banco de dados executadas e nenhuma comunicação com o mesmo será feita de igual maneira. Ele simplesmente pegará o objeto e o enviará de volta ao Client, melhorando o desempenho da aplicação.
-### 8. E este Cache pode ser atualizado ou será atualizado. E todas às vezes que esse objeto for atualizado, a gravação no database do dado ocorrerá automaticamente. Essas Frameworks(estruturas) Caching ou as do hibernate atualizarão o Cache. E lerá o dado armazenado novamente no Cache que foi atualizado.
-### 9. Se esse dado for deletado, também será deletado do Cache.
-### 10. O Caching também pode "desalojar" os dados. Para isso, basta chamar métodos "Evict ( despejo )" nas sessões do hibernate.
-## B. Os dois níveis de Caching que o Hibernate suporta.
-### 1. Nível I (N1)
-#### a. Session
-#### b. O nível 1 de Cache que é livre e que está sempre habilitado por Default acontece na " Session ".
-#### c. O nível 1 acontece quando um Client acessa a Aplicacao e internamente uma Session do Hibernate é usada pelo JPA através do Spring Data.
-#### d. A primeira vez, o dado é lido do database e é colocado no Cache e na próxima vez que o Client buscar o mesmo dado, a Session o buscará do Cache em vez de buscar do database.
-#### e. E se outro Client acessar a Aplicacao e se uma Session do Hibernate é utilizada, o Cache nunca será o mesmo de outro Client, mas cada Client tem o seu próprio Cache.
-#### f. E cada Client acessará o seu Cache correspondente.
-#### g. Então, a diferença entre o Cache do nível 1 para o nível 2, é que esse último será buscado através de Sessions com algo em comum, como no exemplo acima, Caches de mais de um Client, porque ele acontece no nível SessionFactory.
-### 2. Nível II (N2)
-#### a. SessionFactory
-#### b. Necessita de passos adicionais para funcionar.
-#### c. Como o próprio nome diz " Factory (fábrica) ", ele cria múltiplas sessões do hibernate.
-#### d. Essa é a forma que que eles compartilham dados através de sessões do hibernate.
-#### e. Se múltiplos usuários estão acessando a aplicação e várias sessões do hibernate, os objetos armazenados ( "cached" ) também compartilharão através das sessões dos usuários.
-#### f. Tanto o Session quanto o SessionFactory são objetos do hibernate de baixo nível que são usados internamente por ele.
-#### g. JPA: Quando não havia tanto o JPA quanto o Spring Data, estes dois níveis, Session e SessionFactory, eram usados diretamente na Aplicacao.
-#### h. A SessionFactory é responsável por criar Sessions do Hibernate de forma diferente, ou seja, os Caches terão algo em comum. E todas as Sessions compartilharão este Cache.
-#### i. Quando o Client acessa a Aplicacao, a Session ler e executa um Select na Query. Ler o Objeto e o armazena no Cache e então ele é enviado de volta ao Client.
-#### j. E daí outro Client ao acessar a Aplicacao, uma Session diferente é utilizada mas a Session checará primeiro para ver se o dado está no nível 2 de Cache.
-#### k. Se o dado estiver no nível 2 como descrito acima, ele então estará nas Queries do Database e estes dados serão enviados de volta ao Client.
-#### l. Então, o nível 2 é muito poderoso por causa que os dados aqui são armazenados em Cache através de Sessions.
-#### m. Mas ele precisa de configurações adicionais. O Hibernate não dá suporte para essas. Por isso é necessário utilizar Provedores de Caching ( Providers ) como:
-##### i. ehcache - este é o mais popular e também o mais utilizado.
-##### ii. swaram cache
-##### iii. Jboss Tree cache
-##### iv. OS cache
-##### v. Tangosol Cache
-## N1 Caching
-### 1
+# SPRING DATA JPA 
+## A. Entendendo o Fluxo de Execução do Spring ao corrermos ( run ) a nossa aplicação:
+#### 1. MAVEN CLASSPATH: Ele começa buscando em nossa classpath as dependências do Maven que foram inicializadas na instalação do projeto como o Spring:
+##### a. Se não usarmos outro fornecedor(vendor) ORM ( Object Relational Mapping = processo de mapeamento de uma classe java à tabela do database e seus campos ou membros para as colunas das tabelas existentes. ), ele usará o hibernate por default.
+##### b. Busca também pelo connector sql ( ou mysql se estiver usando ).
+#### 2. APPLICATION PROPERTIES: Percebe que nós estamos buscando conectar o sql database e busca pelo application.properties.
+##### a. E acha as informações relativas a conexão como url, username, password e etc.
+#### 3. PACKAGES: Escaneia todos os sub-packages do package principal em que a classe Main estar presente.
+##### a. Por isso esta classe precisa estar com a annotation @SpringBootApplication para ela escanear tanto o Package quanto os sub-packages.
+#### 4. REPOSITORY: O Spring Boot terá acesso a todas as informações e/ou os dados Spring que possuem a informação para criar a JPA entity manage factory usando as informações de data source que nós informamos para ele na properties.
+##### a. Ele sabe como conectar-se e também estabelecer uma conexão ao database.
+##### b. Dessa forma, ele criará uma EntityManager que é a classe chave no JPA.
+##### c. E quando executa nossa Interface ProdutoRepositorio com o método respository.save, Spring cria internamente uma implementação, uma implementação representante ( proxy ) dessa classe que retornará os métodos invocados em EntityManager.
+##### d. Então, quando invocamos métodos como "save" ou um "find one" ou um "delete", internamente, Spring está invocando os métodos de EntityManager através de uma classe que gera em tempo real a implementação nessa interface em particular e executa as operações de gerenciamento necessárias no Database.
+##### e. Com isso, evitamos todos os códigos boiler plates ( vários códigos e estruturas ) e configuração ao simplesmente usar Spring Data que simplifica nossas operações de Database para as nossas aplicações.
+## B. JPQL
+##### a. Significa Java Persistence Query Language.
+##### b. Ele é um padrão para fazer queries do JPA que nada tem a ver com objetos e classe de domínios que são escritos em queries sequenciais, diferentes de como são escritas para tabelas e colunas do database.
+##### c. JPQL queries são escritas de maneira diferente de nossos objetos e seus campos.
+##### d. Exemplo:
+##### 1. Database functab: 
+|   funcid   |  pname  |    uname    |
+| :---         |     :---:      |          ---: |
+|   |      |    |
+|      |       |      |
+
+
+##### 2. Entidade Funcionario (definida com JPA) com os três campos que mapeiam as três colunas de functab:
+|   Funcionario     | 
+| :---         |
+| int id;   |
+| String pName  (P = primeiro nome)   |
+| String uName  (U = ultimo nome)   |
+| select * from Funcionario (SQL)|
+| select pName,uName from Funcionario(JPQL)   |
+
+##### e. No exemplo acima, as instruções JPQL estão convertendo os domínios das classes e seus campos, que são internamente convertidos pelo nosso ORM igual ao Hibernate no SQL.
+##### f. Ele é convertido apropriadamente para o SQL correspondente ao mapeamento da entidade (Funcionario) e o da tabela(functab) do database.
+##### g. É possível chamar os parâmetros passados dentro dessas queries.
+##### h. Também pode-se utilizar select e nao-select operações como: inster, update, deletes usando JPQL.
+##### i. Fazer uso de funções de agregação relacionais e Joins.
+##### j. Muito do que há em SQL pode ser convertido e usado em palavras-chaves e síntaxe JPQL.
+##### k. JPQL é case sensitive quando quando se trata de nomes de classe de domínio (Funcionario) e seu campos (pName e etc).
+##### l. Contudo, JPQL não é case sensitive quando se trata de palavras-chave na própria sintaxe da linguagem como, por exemplo, se você estivesse usando funções agregadas como contagem.
