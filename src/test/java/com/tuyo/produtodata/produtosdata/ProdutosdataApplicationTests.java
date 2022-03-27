@@ -166,17 +166,3 @@ class ProdutosdataApplicationTests {    // Junit testes
         repository.findAll(pageable).forEach(p -> System.out.println(p.getName()));
 
     }
-
-/*    @Test
-    @Transactional
-    public void testCaching() {
-        Session session = entityManager.unwrap(Session.class);
-        Produto produto = repository.findById(1).get();
-
-        repository.findById(1).get();
-
-        session.evict(produto);
-
-        repository.findById(1).get();
-    }*/
-}
