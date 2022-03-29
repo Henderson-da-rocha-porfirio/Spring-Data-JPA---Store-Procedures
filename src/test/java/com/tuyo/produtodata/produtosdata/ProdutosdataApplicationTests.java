@@ -1,25 +1,23 @@
 package com.tuyo.produtodata.produtosdata;
 
-import com.tuyo.produtodata.produtosdata.entities.Produto;
-import com.tuyo.produtodata.produtosdata.repository.ProdutoRepository;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.test.context.junit4.SpringRunner;
+import com.tuyo.produtodata.produtosdata.entities.*;
+import com.tuyo.produtodata.produtosdata.repository.*;
+import org.junit.jupiter.api.*;
+import org.junit.runner.*;
+import org.springframework.beans.factory.annotation.*;
+import org.springframework.boot.test.context.*;
+import org.springframework.data.domain.*;
+import org.springframework.test.context.junit4.*;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 @RunWith(SpringRunner.class)            //Usando SpringRunner em vez de JUnit default.
 @SpringBootTest
 class ProdutosdataApplicationTests {    // Junit testes
 
+    @Autowired
     ProdutoRepository repository;
 
     @Test
@@ -166,6 +164,13 @@ class ProdutosdataApplicationTests {    // Junit testes
     public void testFindAllPagingAndSorting() {                                                         //Paging e Sorting sendo usados juntos
         Pageable pageable = PageRequest.of(0, 2, Sort.Direction.DESC, "name");
         repository.findAll(pageable).forEach(p -> System.out.println(p.getName()));
+
+    }
+
+    @Test
+    public void testFindAllProdutos(){
+
+        System.out.println(repository.findAllProdutos());
 
     }
 }
