@@ -1,21 +1,25 @@
 package com.tuyo.produtodata.produtosdata;
 
-import com.tuyo.produtodata.produtosdata.entities.*;
-import com.tuyo.produtodata.produtosdata.repository.*;
-import org.junit.jupiter.api.*;
-import org.junit.runner.*;
-import org.springframework.beans.factory.annotation.*;
-import org.springframework.boot.test.context.*;
-import org.springframework.data.domain.*;
-import org.springframework.test.context.junit4.*;
+import com.tuyo.produtodata.produtosdata.entities.Produto;
+import com.tuyo.produtodata.produtosdata.repository.ProdutoRepository;
+import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @RunWith(SpringRunner.class)            //Usando SpringRunner em vez de JUnit default.
 @SpringBootTest
-class ProdutosdataApplicationTests {    // Junit testes
+class ProdutosdataStoreApplicationTests {    // Junit testes
 
     @Autowired
     ProdutoRepository repository;
